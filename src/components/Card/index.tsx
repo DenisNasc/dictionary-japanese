@@ -1,11 +1,14 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
 import Feedback from './Feedback';
+import CardHeader from './CardHeader';
 
 const Card = () => {
+  useState();
+
   return (
     <Container>
-      <h3 id="expression">ありがとう (あ: a り: ri が: ga と: to う: u)</h3>
+      <CardHeader />
 
       <div id="description">
         Aqui ficará a descrição sobre a expressão em questão Lorem ipsum dolor sit amet consectetur
@@ -43,7 +46,8 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding: 30px;
-  margin: 0px 150px;
+  margin-left: 400px;
+  margin-right: 580px;
   border: 1px solid #000;
   border-radius: 20px;
   font-size: 14px;
@@ -53,16 +57,11 @@ const Container = styled.div`
     width: 400px;
   }
 
-  #expression {
-    margin-bottom: 20px;
-  }
-
   #description {
     margin-bottom: 20px;
   }
 
   #meanings-list {
-    list-style: none;
     margin-bottom: 20px;
     li {
       margin: 10px 0px;

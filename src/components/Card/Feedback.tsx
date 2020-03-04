@@ -24,6 +24,10 @@ const Feedback = () => {
       setLike(count => count - 1);
       setAlreadyLike(false);
     } else {
+      if (alreadyUnLike) {
+        setUnLike(count => count - 1);
+        setAlreadyUnLike(false);
+      }
       setLike(count => count + 1);
       setAlreadyLike(isLiked => isLiked || true);
     }
@@ -34,6 +38,11 @@ const Feedback = () => {
       setUnLike(count => count - 1);
       setAlreadyUnLike(false);
     } else {
+      if (alreadyLike) {
+        setLike(count => count - 1);
+        setAlreadyLike(false);
+      }
+
       setUnLike(count => count + 1);
       setAlreadyUnLike(isUnLiked => isUnLiked || true);
     }
@@ -76,7 +85,7 @@ const Container = styled.div`
   #feedback {
     display: flex;
     justify-content: space-between;
-    align-self: flex-end;
+    align-self: center;
     width: 70px;
 
     #like,
@@ -88,17 +97,17 @@ const Container = styled.div`
 
     #like-icon {
       fill: #00d394;
-      fill-opacity: ${({alreadyLike}: StyledProps) => (alreadyLike ? '80%' : '100%')};
+      fill-opacity: ${({alreadyLike}: StyledProps) => (alreadyLike ? '100%' : '50%')};
     }
 
     #unlike-icon {
       fill: #f44949;
-      fill-opacity: ${({alreadyUnLike}: StyledProps) => (alreadyUnLike ? '80%' : '100%')};
+      fill-opacity: ${({alreadyUnLike}: StyledProps) => (alreadyUnLike ? '100%' : '50%')};
     }
 
     #like-icon:hover,
     #unlike-icon:hover {
-      fill-opacity: 80%;
+      fill-opacity: 100%;
       cursor: pointer;
     }
   }
