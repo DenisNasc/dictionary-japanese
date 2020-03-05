@@ -5,6 +5,7 @@ import Filter from './Filter';
 
 const Header = () => {
   const [query, setQuery] = useState('');
+
   return (
     <Container>
       <div id="search-bar">

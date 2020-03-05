@@ -1,14 +1,17 @@
-import React, {useState, useRef} from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import {ReactComponent as Icon} from '../../assets/icons/filter.svg';
+import useFiltredWords from './hooks/useFiltredWords';
 
 interface StyledProps {
   isActivated: boolean;
 }
 
 const Filter = () => {
+  const [selectedFilter, setSelectedFilter] = useState('isFavorite');
   const [isActivated, setIsActivated] = useState(false);
-  const [selectedFilter, setSelectedFilter] = useState('Filtrar por . . .');
+
+  useFiltredWords(selectedFilter);
 
   const handleSelectedFilter = (selected: string) => {
     setSelectedFilter(selected);
@@ -29,17 +32,17 @@ const Filter = () => {
         <div id="dropdown-content" onPointerEnter={() => setIsActivated(true)}>
           <ul>
             <li>
-              <button type="button" onClick={() => handleSelectedFilter('Verbo')}>
+              <button type="button" onClick={() => handleSelectedFilter('isVerb')}>
                 Verbo
               </button>
             </li>
             <li>
-              <button type="button" onClick={() => handleSelectedFilter('Particula')}>
+              <button type="button" onClick={() => handleSelectedFilter('isParticle')}>
                 Particula
               </button>
             </li>
             <li>
-              <button type="button" onClick={() => handleSelectedFilter('Adjetivo')}>
+              <button type="button" onClick={() => handleSelectedFilter('isAdjective')}>
                 Adjetivo
               </button>
             </li>
