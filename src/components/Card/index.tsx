@@ -3,40 +3,35 @@ import styled from 'styled-components';
 import Feedback from './Feedback';
 import CardHeader from './CardHeader';
 
-const Card = () => {
+import {Word} from '../../redux/reducers/app.reducer';
+
+const Card = ({
+  word,
+  isVerb,
+  isAdjective,
+  isParticle,
+  meaning,
+  examples,
+  isFavorite,
+  upVotes,
+  downVotes
+}: Word) => {
   useState();
 
   return (
     <Container>
-      <CardHeader />
+      <CardHeader word={word} isVerb={isVerb} isAdjective={isAdjective} isParticle={isParticle} />
 
-      <div id="description">
-        Aqui ficará a descrição sobre a expressão em questão Lorem ipsum dolor sit amet consectetur
-        adipisicing elit. Corporis dolor aliquid quo exercitationem corrupti ullam quisquam. Non,
-        odit incidunt sed doloribus vero architecto praesentium voluptatum voluptate dicta culpa
-        minima officiis!
-      </div>
+      <div id="description">{meaning}</div>
 
       <div id="meanings">
         <ul id="meanings-list">
-          <li>
-            Significado 1: Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum deleniti
-            iure repudiandae illum doloribus deserunt quisquam laboriosam, sed, provident dolorem a?
-            Soluta vitae impedit consequuntur, sequi repudiandae voluptate facere nulla.
-          </li>
-          <li>
-            Significado 2: Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum deleniti
-            iure repudiandae illum doloribus deserunt quisquam laboriosam, sed, provident dolorem a?
-            Soluta vitae impedit consequuntur, sequi repudiandae voluptate facere nulla.
-          </li>
-          <li>
-            Significado 3: Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum deleniti
-            iure repudiandae illum doloribus deserunt quisquam laboriosam, sed, provident dolorem a?
-            Soluta vitae impedit consequuntur, sequi repudiandae voluptate facere nulla.
-          </li>
+          {examples.map(e => (
+            <li key={e}>{e}</li>
+          ))}
         </ul>
       </div>
-      <Feedback />
+      <Feedback isFavorite={isFavorite} upVotes={upVotes} downVotes={downVotes} />
     </Container>
   );
 };
@@ -52,6 +47,7 @@ const Container = styled.div`
   border-radius: 20px;
   font-size: 14px;
   text-align: justify;
+  min-width: 400px;
 
   @media screen and (max-width: 768px) {
     width: 400px;

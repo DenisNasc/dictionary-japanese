@@ -1,11 +1,24 @@
-import React, {useState} from 'react';
-import {useSelector} from 'react-redux';
+import React from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
 import {ReactComponent as Search} from '../../assets/icons/search.svg';
 import Filter from './Filter';
 
+import useQueryWords from './hooks/useQueryWords';
+import {HANDLE_QUERY, FETCH_WORDS_QUERY_START} from '../../redux/actions/app.actions';
+
+import {Store} from '../../redux/store/index.store';
+import {AppState} from '../../redux/reducers/app.reducer';
+
 const Header = () => {
-  const [query, setQuery] = useState('');
+  const dispatch = useDispatch();
+  const {query} = useSelector<Store, AppState>(state => state.app);
+
+  useQueryWords(query);
+
+  const handleQuery = (word: string) => {
+    dispatch({type: HANDLE_QUERY, payload: {query: word}});
+  };
 
   return (
     <Container>
@@ -14,10 +27,10 @@ const Header = () => {
           type="text"
           id="query"
           value={query}
-          onChange={e => setQuery(e.target.value)}
+          onChange={e => handleQuery(e.target.value)}
           placeholder="はじめまして . . ."
         />
-        <Search id="icon" />
+        <Search onClick={() => dispatch({type: FETCH_WORDS_QUERY_START})} id="icon" />
       </div>
 
       <Filter />

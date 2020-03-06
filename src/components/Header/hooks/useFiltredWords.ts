@@ -5,14 +5,17 @@ import axios from 'axios';
 import {Store} from '../../../redux/store/index.store';
 import {AppState} from '../../../redux/reducers/app.reducer';
 
-import {FETCH_WORDS_SUCCESS, FETCH_WORDS_FAIL} from '../../../redux/actions/app.actions';
+import {
+  FETCH_WORDS_FILTRED_SUCCESS,
+  FETCH_WORDS_FILTRED_FAIL
+} from '../../../redux/actions/app.actions';
 
 const useFiltredWords = (selectedFilter: string) => {
-  const {fetchWordsStart} = useSelector<Store, AppState>(state => state.app);
+  const {fetchWordsFiltredStart} = useSelector<Store, AppState>(state => state.app);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!fetchWordsStart) {
+    if (!fetchWordsFiltredStart) {
       return;
     }
 
@@ -22,15 +25,15 @@ const useFiltredWords = (selectedFilter: string) => {
       );
 
       console.log(wordsFiltred);
-      dispatch({type: FETCH_WORDS_SUCCESS, payload: {wordsFetched: wordsFiltred}});
+      dispatch({type: FETCH_WORDS_FILTRED_SUCCESS, payload: {wordsFetched: wordsFiltred}});
     };
 
     try {
       fetchWord();
     } catch (err) {
-      dispatch({type: FETCH_WORDS_FAIL, payload: {errorMessage: err.message}});
+      dispatch({type: FETCH_WORDS_FILTRED_FAIL, payload: {errorMessage: err.message}});
     }
-  }, [fetchWordsStart]);
+  }, [fetchWordsFiltredStart]);
 };
 
 export default useFiltredWords;

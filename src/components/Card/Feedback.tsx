@@ -10,13 +10,19 @@ interface StyledProps {
   favorite: boolean;
 }
 
-const Feedback = () => {
-  const [favorite, setFavorite] = useState(false);
+interface Props {
+  isFavorite: boolean;
+  upVotes: number;
+  downVotes: number;
+}
 
-  const [like, setLike] = useState(0);
+const Feedback = ({isFavorite, upVotes, downVotes}: Props) => {
+  const [favorite, setFavorite] = useState(isFavorite);
+
+  const [like, setLike] = useState(upVotes);
   const [alreadyLike, setAlreadyLike] = useState(false);
 
-  const [unLike, setUnLike] = useState(0);
+  const [unLike, setUnLike] = useState(downVotes);
   const [alreadyUnLike, setAlreadyUnLike] = useState(false);
 
   const handleLike = () => {
@@ -50,7 +56,7 @@ const Feedback = () => {
 
   return (
     <Container favorite={favorite} alreadyLike={alreadyLike} alreadyUnLike={alreadyUnLike}>
-      <Favorite id="favorite" onClick={() => setFavorite(isFavorite => !isFavorite)} />
+      <Favorite id="favorite" onClick={() => setFavorite(state => !state)} />
       <div id="feedback">
         <div id="like">
           <Like id="like-icon" onClick={handleLike} />

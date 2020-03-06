@@ -7,14 +7,17 @@ interface StyledProps {
   isAdjective: boolean;
 }
 
-const CardHeader = () => {
-  const [isVerb, setIsVerb] = useState(true);
-  const [isParticle, setIsParticle] = useState(true);
-  const [isAdjective, setIsAdjective] = useState(true);
+interface Props {
+  word: string;
+  isVerb: boolean;
+  isAdjective: boolean;
+  isParticle: boolean;
+}
 
+const CardHeader = ({word, isVerb, isAdjective, isParticle}: Props) => {
   return (
     <Container isVerb={isVerb} isParticle={isParticle} isAdjective={isAdjective}>
-      <h3 id="expression">ありがとう (あ: a り: ri が: ga と: to う: u)</h3>
+      <h3 id="expression">{word}</h3>
 
       <ul>
         <li id="verb">Verbo</li>

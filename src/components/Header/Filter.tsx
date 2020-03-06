@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import {ReactComponent as Icon} from '../../assets/icons/filter.svg';
 import useFiltredWords from './hooks/useFiltredWords';
 
-import {FETCH_WORDS_START} from '../../redux/actions/app.actions';
+import {FETCH_WORDS_FILTRED_START} from '../../redux/actions/app.actions';
 
 interface StyledProps {
   isActivated: boolean;
@@ -20,7 +20,7 @@ const Filter = () => {
 
   const handleSelectedFilter = (selected: string) => {
     setSelectedFilter(selected);
-    dispatch({type: FETCH_WORDS_START});
+    dispatch({type: FETCH_WORDS_FILTRED_START});
   };
 
   return (
