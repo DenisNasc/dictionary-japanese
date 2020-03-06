@@ -1,13 +1,18 @@
 import React, {useState} from 'react';
+import {useDispatch} from 'react-redux';
 import styled from 'styled-components';
 import {ReactComponent as Icon} from '../../assets/icons/filter.svg';
 import useFiltredWords from './hooks/useFiltredWords';
+
+import {FETCH_WORDS_START} from '../../redux/actions/app.actions';
 
 interface StyledProps {
   isActivated: boolean;
 }
 
 const Filter = () => {
+  const dispatch = useDispatch();
+
   const [selectedFilter, setSelectedFilter] = useState('isFavorite');
   const [isActivated, setIsActivated] = useState(false);
 
@@ -15,6 +20,7 @@ const Filter = () => {
 
   const handleSelectedFilter = (selected: string) => {
     setSelectedFilter(selected);
+    dispatch({type: FETCH_WORDS_START});
   };
 
   return (
