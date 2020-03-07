@@ -22,6 +22,7 @@ const Header = () => {
 
   return (
     <Container>
+      <Filter />
       <div id="search-bar">
         <input
           type="text"
@@ -32,15 +33,13 @@ const Header = () => {
         />
         <Search onClick={() => dispatch({type: FETCH_WORDS_FILTRED_START})} id="icon" />
       </div>
-
-      <Filter />
     </Container>
   );
 };
 
 const Container = styled.header`
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   height: 80px;
   background: #141735;

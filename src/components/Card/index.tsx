@@ -31,7 +31,7 @@ const Container = styled.div`
   margin-bottom: 20px;
   margin-left: 400px;
   margin-right: 580px;
-  border: 1px solid #000;
+  border: 1px solid #ebebee;
   border-radius: 20px;
   font-size: 14px;
   text-align: justify;

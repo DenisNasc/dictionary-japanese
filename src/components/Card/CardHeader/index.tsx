@@ -68,7 +68,7 @@ const Container = styled.div`
   }
 
   #kanji-furigana:hover {
-    color: black;
+    color: #5d27b6;
   }
 
   #kanji-furigana {

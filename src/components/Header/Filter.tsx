@@ -10,6 +10,7 @@ import {AppState} from '../../redux/reducers/app.reducer';
 
 interface StyledProps {
   isActivated: boolean;
+  isFilterSelected: string;
 }
 
 const Filter = () => {
@@ -24,26 +25,41 @@ const Filter = () => {
   };
 
   return (
-    <Container isActivated={isActivated}>
-      <div
-        id="dropdown"
-        onPointerEnter={() => setIsActivated(true)}
-        onPointerLeave={() => setIsActivated(false)}
-        role="button"
-        tabIndex={0}
-        onKeyDown={() => {}}
-      >
-        <span id="filter-title">{!sectionFilter ? 'No Filters' : `Section ${sectionFilter}`}</span>
+    <Container isActivated={isActivated} isFilterSelected={sectionFilter}>
+      <div id="dropdown">
+        <Icon
+          id="filter"
+          onClick={() => {
+            setIsActivated(false);
+            handleSelectedFilter('');
+          }}
+        />
+        <span
+          id="filter-title"
+          role="button"
+          tabIndex={0}
+          onKeyDown={() => {}}
+          onClick={() => setIsActivated(state => !state)}
+        >
+          {!sectionFilter ? 'Select' : `Section ${sectionFilter}`}
+        </span>
 
-        <Icon id="filter" onClick={() => handleSelectedFilter('')} />
-
-        <div id="dropdown-content" onPointerEnter={() => setIsActivated(true)}>
+        <div id="dropdown-content">
           <ul>
             {['1', '2', '3', '4', '5', '6', '7', '8', '9'].map(section => (
               <li key={section}>
-                <button type="button" onClick={() => handleSelectedFilter(section)}>
+                <div
+                  id="filter-option"
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={() => {}}
+                  onClick={() => {
+                    setIsActivated(false);
+                    handleSelectedFilter(section);
+                  }}
+                >
                   {`Section ${section}`}
-                </button>
+                </div>
               </li>
             ))}
           </ul>
@@ -55,45 +71,59 @@ const Filter = () => {
 
 const Container = styled.div`
   color: #fafafb;
+  font-family: 'Roboto', sans-serif;
   cursor: pointer;
 
   #filter-title {
-    color: rgb(120, 120, 120);
+    color: #fafafb;
+    font-weight: bolder;
+    margin-left: 20px;
   }
 
   #filter {
     fill: #fafafb;
+    opacity: ${({isFilterSelected}: StyledProps) => (isFilterSelected ? '100%' : '50%')};
   }
 
   #filter:hover {
-    fill: rgb(120, 120, 120);
+    opacity: 50%;
   }
 
   #dropdown {
     position: relative;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
+    background: #5d27b6;
+    border-radius: 5px;
     width: 150px;
-    padding-bottom: 5px;
+    padding: 10px 10px;
   }
 
   #dropdown-content {
     display: ${({isActivated}: StyledProps) => (isActivated ? 'block' : 'none')};
-    top: 29px;
+    opacity: ${({isActivated}: StyledProps) => (isActivated ? '100%' : '0%')};
+    transition: 3s;
+    top: 40px;
+    border-radius: 5px;
     position: absolute;
     background-color: #232850;
-    min-width: 150px;
+    min-width: 90%;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    padding: 12px 16px;
     z-index: 1;
   }
 
   li {
-    padding: 5px 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-    button {
-      border: none;
+    #filter-option {
+      font-family: 'Roboto', sans-serif;
+      border-bottom: 1px solid gray;
+      padding: 15px 0;
+      padding-left: 10px;
+      text-align: left;
       background: none;
       cursor: pointer;
       width: 100%;
@@ -101,8 +131,8 @@ const Container = styled.div`
       color: #fafafb;
     }
 
-    button:hover {
-      color: rgb(120, 120, 120);
+    #filter-option:hover {
+      background: #5d27b6;
     }
   }
 `;
