@@ -1,10 +1,12 @@
 import React, {useState} from 'react';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
 import {ReactComponent as Icon} from '../../assets/icons/filter.svg';
 import useFiltredWords from './hooks/useFiltredWords';
 
-import {FETCH_WORDS_FILTRED_START} from '../../redux/actions/app.actions';
+import {HANDLE_APP_STATE} from '../../redux/actions/app.actions';
+import {Store} from '../../redux/store/index.store';
+import {AppState} from '../../redux/reducers/app.reducer';
 
 interface StyledProps {
   isActivated: boolean;
@@ -13,14 +15,12 @@ interface StyledProps {
 const Filter = () => {
   const dispatch = useDispatch();
 
-  const [selectedFilter, setSelectedFilter] = useState('isFavorite');
+  const {sectionFilter} = useSelector<Store, AppState>(state => state.app);
+
   const [isActivated, setIsActivated] = useState(false);
 
-  useFiltredWords(selectedFilter);
-
   const handleSelectedFilter = (selected: string) => {
-    setSelectedFilter(selected);
-    dispatch({type: FETCH_WORDS_FILTRED_START});
+    dispatch({type: HANDLE_APP_STATE, payload: {key: 'sectionFilter', value: selected}});
   };
 
   return (
@@ -33,25 +33,19 @@ const Filter = () => {
         tabIndex={0}
         onKeyDown={() => {}}
       >
-        <span id="filter-title">{selectedFilter}</span>
-        <Icon id="filter" />
+        <span id="filter-title">{!sectionFilter ? 'No Filters' : `Section ${sectionFilter}`}</span>
+
+        <Icon id="filter" onClick={() => handleSelectedFilter('')} />
+
         <div id="dropdown-content" onPointerEnter={() => setIsActivated(true)}>
           <ul>
-            <li>
-              <button type="button" onClick={() => handleSelectedFilter('isVerb')}>
-                Verbo
-              </button>
-            </li>
-            <li>
-              <button type="button" onClick={() => handleSelectedFilter('isParticle')}>
-                Particula
-              </button>
-            </li>
-            <li>
-              <button type="button" onClick={() => handleSelectedFilter('isAdjective')}>
-                Adjetivo
-              </button>
-            </li>
+            {['1', '2', '3', '4', '5', '6', '7', '8', '9'].map(section => (
+              <li key={section}>
+                <button type="button" onClick={() => handleSelectedFilter(section)}>
+                  {`Section ${section}`}
+                </button>
+              </li>
+            ))}
           </ul>
         </div>
       </div>
@@ -71,6 +65,10 @@ const Container = styled.div`
     fill: #fafafb;
   }
 
+  #filter:hover {
+    fill: rgb(120, 120, 120);
+  }
+
   #dropdown {
     position: relative;
     display: flex;
@@ -82,9 +80,9 @@ const Container = styled.div`
 
   #dropdown-content {
     display: ${({isActivated}: StyledProps) => (isActivated ? 'block' : 'none')};
-    bottom: -120px;
+    top: 29px;
     position: absolute;
-    background-color: #f9f9f9;
+    background-color: #232850;
     min-width: 150px;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     padding: 12px 16px;
@@ -100,6 +98,7 @@ const Container = styled.div`
       cursor: pointer;
       width: 100%;
       height: 100%;
+      color: #fafafb;
     }
 
     button:hover {

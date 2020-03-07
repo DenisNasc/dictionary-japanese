@@ -10,7 +10,7 @@ import {
   FETCH_WORDS_FILTRED_FAIL
 } from '../../../redux/actions/app.actions';
 
-const useFiltredWords = (selectedFilter: string) => {
+const useFiltredWords = (selectedFilter: string, word: string) => {
   const {fetchWordsFiltredStart} = useSelector<Store, AppState>(state => state.app);
   const dispatch = useDispatch();
 
@@ -21,7 +21,7 @@ const useFiltredWords = (selectedFilter: string) => {
 
     const fetchWord = async () => {
       const {data: wordsFiltred} = await axios.get(
-        `http://localhost:5050/words?${selectedFilter}=true`
+        `http://localhost:5050/words?section=${selectedFilter}&word=${word}`
       );
 
       console.log(wordsFiltred);

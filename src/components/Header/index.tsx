@@ -4,20 +4,20 @@ import styled from 'styled-components';
 import {ReactComponent as Search} from '../../assets/icons/search.svg';
 import Filter from './Filter';
 
-import useQueryWords from './hooks/useQueryWords';
-import {HANDLE_QUERY, FETCH_WORDS_QUERY_START} from '../../redux/actions/app.actions';
+import useFiltredWords from './hooks/useFiltredWords';
+import {HANDLE_APP_STATE, FETCH_WORDS_FILTRED_START} from '../../redux/actions/app.actions';
 
 import {Store} from '../../redux/store/index.store';
 import {AppState} from '../../redux/reducers/app.reducer';
 
 const Header = () => {
   const dispatch = useDispatch();
-  const {query} = useSelector<Store, AppState>(state => state.app);
+  const {query: word, sectionFilter} = useSelector<Store, AppState>(state => state.app);
 
-  useQueryWords(query);
+  useFiltredWords(sectionFilter, word);
 
-  const handleQuery = (word: string) => {
-    dispatch({type: HANDLE_QUERY, payload: {query: word}});
+  const handleQuery = (query: string) => {
+    dispatch({type: HANDLE_APP_STATE, payload: {key: 'query', value: query}});
   };
 
   return (
@@ -26,11 +26,11 @@ const Header = () => {
         <input
           type="text"
           id="query"
-          value={query}
+          value={word}
           onChange={e => handleQuery(e.target.value)}
           placeholder="はじめまして . . ."
         />
-        <Search onClick={() => dispatch({type: FETCH_WORDS_QUERY_START})} id="icon" />
+        <Search onClick={() => dispatch({type: FETCH_WORDS_FILTRED_START})} id="icon" />
       </div>
 
       <Filter />

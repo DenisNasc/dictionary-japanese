@@ -16,6 +16,7 @@ const Main = () => {
           sentence={card.sentence}
           meanings={card.meanings}
           translate={card.translate}
+          section={card.section}
           isFavorite={card.isFavorite}
           upVotes={card.upVotes}
           downVotes={card.downVotes}
@@ -29,7 +30,7 @@ const Container = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: calc(100vh - 80px);
+  min-height: calc(100vh - 80px);
   background: #141735;
   color: #fafafb;
 `;

@@ -1,11 +1,8 @@
 import {
-  HANDLE_QUERY,
+  HANDLE_APP_STATE,
   FETCH_WORDS_FILTRED_START,
   FETCH_WORDS_FILTRED_SUCCESS,
-  FETCH_WORDS_FILTRED_FAIL,
-  FETCH_WORDS_QUERY_START,
-  FETCH_WORDS_QUERY_SUCCESS,
-  FETCH_WORDS_QUERY_FAIL
+  FETCH_WORDS_FILTRED_FAIL
 } from '../actions/app.actions';
 
 export interface Word {
@@ -15,72 +12,40 @@ export interface Word {
   translate: string;
   meanings: {word: string; meaning: string}[];
   isFavorite: boolean;
+  section: string;
   upVotes: number;
   downVotes: number;
 }
 
 export interface AppState {
-  fetchWordsQueryStart: boolean;
-  fetchWordsQuerySuccess: boolean;
-  fetchWordsQueryFail: boolean;
   fetchWordsFiltredStart: boolean;
   fetchWordsFiltredSuccess: boolean;
   fetchWordsFiltredFail: boolean;
   query: string;
+  sectionFilter: string;
   errorMessage: string;
   wordsFetched: Word[];
 }
 
 export interface AppAction {
   type: string;
-  payload?: {query?: string; errorMessage?: string; wordsFetched?: Word[]};
+  payload: {key: string; value?: string; errorMessage?: string; wordsFetched?: Word[]};
 }
 
 const initialState = {
-  fetchWordsQueryStart: false,
-  fetchWordsQuerySuccess: false,
-  fetchWordsQueryFail: false,
   fetchWordsFiltredStart: false,
   fetchWordsFiltredSuccess: false,
   fetchWordsFiltredFail: false,
   query: '',
+  sectionFilter: '',
   errorMessage: '',
   wordsFetched: []
 };
 
 const appReducer = (state = initialState, action: AppAction) => {
   switch (action.type) {
-    case HANDLE_QUERY: {
-      return {...state, query: action.payload?.query};
-    }
-
-    case FETCH_WORDS_QUERY_START: {
-      return {
-        ...state,
-        fetchWordsQueryStart: true,
-        fetchWordsQuerySuccess: false,
-        fetchWordsQueryFail: false
-      };
-    }
-
-    case FETCH_WORDS_QUERY_SUCCESS: {
-      return {
-        ...state,
-        fetchWordsQueryStart: false,
-        fetchWordsQuerySuccess: true,
-        fetchWordsQueryFail: false,
-        wordsFetched: action.payload?.wordsFetched
-      };
-    }
-
-    case FETCH_WORDS_QUERY_FAIL: {
-      return {
-        ...state,
-        fetchWordsQueryStart: false,
-        fetchWordsQuerySuccess: false,
-        fetchWordsQueryFail: true,
-        errorMessage: action.payload?.errorMessage
-      };
+    case HANDLE_APP_STATE: {
+      return {...state, [action.payload.key]: action.payload.value};
     }
 
     case FETCH_WORDS_FILTRED_START: {
@@ -98,7 +63,7 @@ const appReducer = (state = initialState, action: AppAction) => {
         fetchWordsFiltredStart: false,
         fetchWordsFiltredSuccess: true,
         fetchWordsFiltredFail: false,
-        wordsFetched: action.payload?.wordsFetched
+        wordsFetched: action.payload.wordsFetched
       };
     }
 
@@ -108,7 +73,7 @@ const appReducer = (state = initialState, action: AppAction) => {
         fetchWordsFiltredStart: false,
         fetchWordsFiltredSuccess: false,
         fetchWordsFiltredFail: true,
-        errorMessage: action.payload?.errorMessage
+        errorMessage: action.payload.errorMessage
       };
     }
 
