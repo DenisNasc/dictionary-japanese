@@ -11,13 +11,10 @@ import {
 export interface Word {
   _id?: string;
   __v?: number;
-  word: string;
-  isVerb: boolean;
-  isAdjective: boolean;
-  isParticle: boolean;
+  sentence: string;
+  translate: string;
+  meanings: {word: string; meaning: string}[];
   isFavorite: boolean;
-  meaning: string;
-  examples: string[];
   upVotes: number;
   downVotes: number;
 }

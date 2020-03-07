@@ -10,18 +10,15 @@ const Main = () => {
 
   return (
     <Container>
-      {wordsFetched.map(word => (
+      {wordsFetched.map(card => (
         <Card
-          key={word.word}
-          word={word.word}
-          isVerb={word.isVerb}
-          isAdjective={word.isAdjective}
-          isParticle={word.isParticle}
-          meaning={word.meaning}
-          examples={word.examples}
-          isFavorite={word.isFavorite}
-          upVotes={word.upVotes}
-          downVotes={word.downVotes}
+          key={card.sentence}
+          sentence={card.sentence}
+          meanings={card.meanings}
+          translate={card.translate}
+          isFavorite={card.isFavorite}
+          upVotes={card.upVotes}
+          downVotes={card.downVotes}
         />
       ))}
     </Container>
